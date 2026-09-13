@@ -322,7 +322,7 @@ div[data-testid="stAlert"] {
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-model_path = os.path.normpath(
+model_path = os.path.abspath(
     os.path.join(
         BASE_DIR,
         "..",
@@ -333,23 +333,24 @@ model_path = os.path.normpath(
 
 
 @st.cache_resource
-def load_model(path):
-    if not os.path.isfile(path):
+def load_model():
+    if not os.path.isfile(model_path):
         raise FileNotFoundError(
-            f"Model file not found: {path}"
+            f"Model file not found: {model_path}"
         )
 
-    return joblib.load(path)
+    return joblib.load(model_path)
 
 
 try:
-    model = load_model(model_path)
+    model = load_model()
+    print("Model loaded successfully!")
 
 except Exception as e:
-    st.error("❌ Unable to load the Random Forest model.")
+    st.error("❌ Model loading failed")
     st.exception(e)
     st.stop()
-    
+
 # ============================================================
 # SIDEBAR
 # ============================================================
