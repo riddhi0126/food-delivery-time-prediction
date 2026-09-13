@@ -324,12 +324,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 model_path = os.path.join(
     BASE_DIR,
-    "..",
     "models",
     "food_delivery_time_random_forest.pkl"
 )
-
-model_path = os.path.abspath(model_path)
 
 print("Model path:", model_path)
 print("Model exists:", os.path.exists(model_path))
