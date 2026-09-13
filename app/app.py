@@ -319,22 +319,38 @@ div[data-testid="stAlert"] {
 # ============================================================
 # LOAD MODEL
 # ============================================================
+# ============================================================
+# LOAD MODEL
+# ============================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-model_path = os.path.join(
-    BASE_DIR,
-    "..",
-    "models",
-    "food_delivery_time_random_forest.pkl"
+model_path = os.path.normpath(
+    os.path.join(
+        BASE_DIR,
+        "..",
+        "models",
+        "food_delivery_time_random_forest.pkl"
+    )
 )
 
-model_path = os.path.abspath(model_path)
+print("BASE_DIR:", BASE_DIR)
+print("MODEL PATH:", model_path)
+print("MODEL EXISTS:", os.path.isfile(model_path))
 
-print("Model path:", model_path)
-print("Model exists:", os.path.exists(model_path))
+if not os.path.isfile(model_path):
+    st.error("❌ Model file was not found!")
+    st.write("Expected path:", model_path)
+    st.stop()
 
-model = joblib.load(model_path)
+try:
+    model = joblib.load(model_path)
+    print("Model loaded successfully")
+
+except Exception as e:
+    st.error("❌ Model loading failed")
+    st.exception(e)
+    st.stop()
 
 # ============================================================
 # SIDEBAR
